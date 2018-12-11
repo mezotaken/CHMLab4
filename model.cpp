@@ -54,7 +54,7 @@ double modelmain::a(double x,double h)
     else if(x-h>=ksi)
         return cos(x-h/2)*cos(x-h/2);
     else
-        return h/((ksi - x+h)/(sin(x-h/2)+1) + (x-ksi)/(cos(x-h/2)*cos(x-h/2)));
+        return h/((ksi - x+h)/(sin((x-h+ksi)/2)+1) + (x-ksi)/(cos((x-h+ksi)/2)*cos((x-h+ksi)/2)));
 
 }
 
@@ -65,7 +65,7 @@ double modelmain::d(double x,double h)
     else if(x-h/2>=ksi)
         return 2*x*x;
     else
-        return ((ksi - x +h/2) + (x +h/2-ksi)*(2*x*x))/h;
+        return ((ksi - x +h/2) + (x +h/2-ksi)*(2*((x+h/2+ksi)/2)*((x+h/2+ksi)/2)))/h;
 }
 
 double modelmain::fi(double x,double h)
@@ -75,7 +75,7 @@ double modelmain::fi(double x,double h)
     else if(x-h/2>=ksi)
         return cos(x);
     else
-        return ((ksi - x +h/2)*(sin(2*x)) + (x +h/2-ksi)*(cos(x)))/h;
+        return ((ksi - x +h/2)*(sin(2*((x-h/2+ksi)/2))) + (x +h/2-ksi)*(cos(((x+h/2+ksi)/2))))/h;
     return 1;
 }
 
