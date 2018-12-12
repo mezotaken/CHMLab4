@@ -22,15 +22,23 @@ void MainWindow::paintGraph(QCustomPlot* dst,QCustomPlot* dsterr,QVector<double>
     dst->graph(0)->setData(X,V);
     dst->graph(1)->setData(X,U);
     dst->graph(1)->setPen(pen);
-
+    double minE = err[0], maxE = err[0];
+    for(int i = 1; i < err.size(); i++)
+    {
+        if(err[i]<minE) minE = err[i];
+        if(err[i]>maxE) maxE = err[i];
+    }
     dsterr->addGraph();
     dsterr->graph(0)->setPen(pen);
-    dsterr->graph(0)->setData(X,V);
+    dsterr->graph(0)->setData(X,err);
     dst->graph(0)->setName(QString("Числ. траект V(x)"));
     dst->graph(1)->setName(QString("Точн. траект U(x)"));
     dsterr->graph(0)->setName(QString("err"));
+    dst->legend->setVisible(true);
+    dsterr->legend->setVisible(true);
     dst->xAxis->setRange(X[0],X[X.size()-1]);
     dsterr->xAxis->setRange(X[0],X[X.size()-1]);
+    dsterr->yAxis->setRange(minE,maxE);
     dst->replot();
     dsterr->replot();
 }
